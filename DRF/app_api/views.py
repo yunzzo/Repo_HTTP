@@ -1,6 +1,6 @@
 from rest_framework import generics
-from app.models import FriendInfo
-from .serializers import FriendInfoSerializer
+from app.models import FriendInfo, Taste
+from .serializers import FriendInfoSerializer, TasteSerializer
 
 
 class FriendsInfo(generics.ListCreateAPIView):
@@ -11,3 +11,8 @@ class FriendsInfo(generics.ListCreateAPIView):
 class FriendInfo(generics.RetrieveDestroyAPIView):
     queryset = FriendInfo.objects.all()
     serializer_class = FriendInfoSerializer
+
+
+class Taste(generics.ListCreateAPIView):
+    queryset = Taste.objects.all()
+    serializer_class = TasteSerializer

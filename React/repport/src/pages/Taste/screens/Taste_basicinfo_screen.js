@@ -1,6 +1,7 @@
 import React from "react";
 
 const Taste_basicinfo_screen = (props) => {
+  console.log("들어옴");
   return (
     <div>
       취향_기본정보_화면

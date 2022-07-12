@@ -1,59 +1,102 @@
 //*기본화면에서 취향 클릭 시 나타나는 화면
 //! 반응형 완료
 
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react'
+import { Link, useRouteMatch } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 
+
+
+
+
 const Taste_taste_screen = (props) => {
+  let match = useRouteMatch();
+  let friend_id = match.params.friend_id;
   //image를 렌더링하기 위한 로직
   /*
   매번 이렇게 반복문과 검사를 해주어야 하므로 비효율적이지만,
   문자열 값인 변수를 넣으면 작동하지않는 require의 특성때문에,
   현재로써는 이게 최선인 것 같다.
   */
-  const imageSources = [
-    require("../images/food.png"),
-    require("../images/hobby.png"),
-    require("../images/music.png"),
-    require("../images/culture.png"),
-    require("../images/place.png"),
-    require("../images/present.png"),
-    require("../images/custom.png"),
-  ];
-  //받아온 호칭 배열에 이미지 주소 넣기
+  // const imageSources = [
+  //   require("../images/food.png"),
+  //   require("../images/hobby.png"),
+  //   require("../images/music.png"),
+  //   require("../images/culture.png"),
+  //   require("../images/place.png"),
+  //   require("../images/present.png"),
+  //   require("../images/custom.png"),
+  // ];
+  // //받아온 호칭 배열에 이미지 주소 넣기
 
-  //! 이거 밖에 i 선언안해주면 i찾을 수 없다고 에러남, 왜지??
-  let i=0;
-  for(i=0;i<props.tastes.length;i++){
-    if (i<6){
-      props.tastes[i].image=imageSources[i];
-    }
-    else{
-      props.tastes[i].image=imageSources[6];
-    }
+  // //! 이거 밖에 i 선언안해주면 i찾을 수 없다고 에러남, 왜지??
+  // let i=0;
+  // for(i=0;i<props.tastes.length;i++){
+  //   if (i<6){
+  //     props.tastes[i].image=imageSources[i];
+  //   }
+  //   else{
+  //     props.tastes[i].image=imageSources[6];
+  //   }
+  // }
+
+  // //props로 받아온 딕셔너리 배열로 리스트 엘리먼트 생성.
+  // const list_of_tastes = props.tastes.map((taste) => (
+  //       <ListItemsContainer><li key={taste.key}><ListImageContainer><img src={taste.image}/></ListImageContainer><ListTextsContainer><span>{taste.name}</span><span>{taste.content}</span></ListTextsContainer></li></ListItemsContainer>
+
+  // ));
+  const [infos, setInfos] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getInfos = async () => {
+    const apiUrl = `http://localhost:8000/api/tastes`;
+    await axios
+      .get(apiUrl)
+      .then((res) => {
+        // console.log(res);
+        setInfos(res.data);
+      })
   }
-
-  //props로 받아온 딕셔너리 배열로 리스트 엘리먼트 생성.
-  const list_of_tastes = props.tastes.map((taste) => (
-        <ListItemsContainer><li key={taste.key}><ListImageContainer><img src={taste.image}/></ListImageContainer><ListTextsContainer><span>{taste.name}</span><span>{taste.content}</span></ListTextsContainer></li></ListItemsContainer>
-    
-  ));
-  
+  useEffect(async () => {
+    await getInfos();
+    setIsLoading(false);
+  }, []);
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
+  console.log(infos);
+  console.log(friend_id);
   return (
-      <ScreenContainer>
-      <ul>{list_of_tastes}</ul>
-      
-      <Link to="/taste/choose_taste_to_edit"><img src={require("../images/edit.png")}/></Link>
-      </ScreenContainer>
+    // <ScreenContainer>
+    // <ul>{list_of_tastes}</ul>
+
+    // <Link to="/taste/choose_taste_to_edit"><img src={require("../images/edit.png")}/></Link>
+    // </ScreenContainer>
+
+    <div>
+
+      {infos.map((info) => {
+        if (info.TasteOf == friend_id) {
+          return (
+            <div key={info.id}>
+              {/* <Link to={`/RelationshipList/${info.id}/taste`}> <h5>{info.id}</h5></Link> */}
+              <h2>{info.category}</h2>
+            </div>
+          )
+        }
+
+      })}
+
+
+    </div>
   );
 };
 
 export default Taste_taste_screen;
 
 
-const ScreenContainer=styled.div`
+const ScreenContainer = styled.div`
 
 
 
@@ -76,7 +119,7 @@ a {
  
 }
 `
-const ListItemsContainer=styled.div`
+const ListItemsContainer = styled.div`
 width:100%;
 height:20%;
 /* 
@@ -97,7 +140,7 @@ width:100%;
 height:100%;
 }
 `
-const ListImageContainer=styled.div`
+const ListImageContainer = styled.div`
 width:35%;
 height:100%;
 
@@ -111,7 +154,7 @@ img {
 }
 `
 
-const ListTextsContainer=styled.div`
+const ListTextsContainer = styled.div`
 width:65%;
 height:100%;
 display:flex;

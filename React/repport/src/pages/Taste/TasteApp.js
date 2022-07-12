@@ -6,6 +6,8 @@ import ChooseTasteToEdit from "./screens/ChooseTasteToEdit";
 import Taste_Main from "./screens/Taste_Main";
 import DirectTasteInput from "./screens/DirectTasteInput";
 import InputTasteContent from "./screens/InputTasteContent";
+import Taste_basicinfo_screen from "./screens/Taste_basicinfo_screen";
+import Taste_history_screen from "./screens/Taste_history_screen";
 
 function TasteApp() {
   //! 취향 종류들을 관리하는 useState(이건 전역적으로 관리해주어야 함, 나중에 꼭 contenxt api로 전역적으로 바꾸어야 하나??)
@@ -25,23 +27,30 @@ function TasteApp() {
   return (
 
     <Switch>
-      <Route path="/taste/choose_taste_to_edit">
+      <Route path="/RelationshipList/:friend_id/taste/choose_taste_to_edit">
         <ChooseTasteToEdit tastes={tastes} setTastes={setTastes} />
       </Route>
 
-      <Route path="/taste/direct_input">
+      <Route path="/RelationshipList/:friend_id/taste/direct_input">
         <DirectTasteInput tastes={tastes} setTastes={setTastes} />
       </Route>
 
-      <Route path="/taste/:taste_name">
+      <Route path="/RelationshipList/:friend_id/taste/:taste_name">
         <InputTasteContent
           tastes={tastes}
           setTastes={setTastes}
         ></InputTasteContent>
       </Route>
 
-      <Route path="/RelationshipList/:friend_id/taste/">
-        <Taste_Main tastes={tastes} setTastes={setTastes}></Taste_Main>
+      <Route path="/RelationshipList/:friend_id/taste">
+        <Taste_Main ></Taste_Main>
+      </Route>
+      <Route path="/RelationshipList/:friend_id/basicInfo">
+        <Taste_Main ></Taste_Main>
+      </Route>
+
+      <Route path="/RelationshipList/:friend_id/history">
+        <Taste_Main ></Taste_Main>
       </Route>
     </Switch>
 

@@ -2,7 +2,7 @@
 //! 반응형 완료
 
 import React, { useState, useEffect } from "react";
-import { Route, Link, useRouteMatch } from "react-router-dom";
+import { Route, Link, useRouteMatch, Switch } from "react-router-dom";
 import NicknameModal from "../components/NicknameModal";
 import axios from "axios";
 import styled from "styled-components";
@@ -24,19 +24,20 @@ import { HiDotsHorizontal } from "react-icons/hi";
 
 //todo (MVP에서는X) 이 화면에서 취향 클릭했을 때 구체적 내용 입력 페이지로 들어가도록 라우팅하기.
 
-
 const Taste_Main = (props) => {
   const [info, setInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
   let match = useRouteMatch();
-  let id = match.params.friend_id;
+  let friend_id = match.params.friend_id;
+
 
   const getInfo = async () => {
-    const apiUrl = `http://localhost:8000/api/${id}`;
+    const apiUrl = `http://localhost:8000/api/friends/${friend_id}`;
     await axios
       .get(apiUrl)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setInfo(res.data);
       })
   }
@@ -69,6 +70,10 @@ const Taste_Main = (props) => {
 
   //삭제 버튼 
   const [deleteModal, setDeleteModal] = useState(false);
+  const urlBasic = `/RelationshipList/${friend_id}/basicInfo`;
+  const urlTaste = `/RelationshipList/${friend_id}/taste`;
+  const urlHistory = `/RelationshipList/${friend_id}/history`;
+
   if (isLoading) {
     return <div>로딩중..</div>;
   }
@@ -94,7 +99,7 @@ const Taste_Main = (props) => {
             <MainNamesContainer>
               <NameText>{info.fname}</NameText>
               <div class="nicknameBtnContainer">
-                <NickNameButton onClick={() => setNicknameModal(true)}>{nickname}</NickNameButton>
+                <NickNameButton onClick={() => setNicknameModal(true)}>{info.how2call}</NickNameButton>
               </div>
 
               <NicknameModal
@@ -105,7 +110,7 @@ const Taste_Main = (props) => {
             </MainNamesContainer>
             <MainRelationContainer>
               <RelationButton onClick={() => setRelationModal(true)}>
-                {relationStatus}
+                {info.group}
               </RelationButton>
 
               <RelationModal
@@ -122,17 +127,17 @@ const Taste_Main = (props) => {
           <MiddleBarContainer>
             <MiddleBarLinksContainer>
               <MiddleBarLinkTextContainer>
-                <Link to="/basicinfo">
+                <Link to={urlBasic}>
                   기본정보
                 </Link>
               </MiddleBarLinkTextContainer>
               <MiddleBarLinkTextContainer>
-                <Link to="/taste">
+                <Link to={urlTaste}>
                   취향
                 </Link>
               </MiddleBarLinkTextContainer>
               <MiddleBarLinkTextContainer>
-                <Link to="/history">
+                <Link to={urlHistory}>
                   히스토리
                 </Link>
               </MiddleBarLinkTextContainer>
@@ -144,18 +149,20 @@ const Taste_Main = (props) => {
       </GradientContainer>
 
       <InformationContainer>
-        <Route path="/basicinfo">
-          <Taste_basicinfo_screen />
-        </Route>
-        <Route path="/taste">
-          <Taste_taste_screen
-            tastes={props.tastes}
-            setTastes={props.setTastes}
-          ></Taste_taste_screen>
-        </Route>
-        <Route path="/history">
-          <Taste_history_screen />
-        </Route>
+        <Switch>
+          <Route path="/RelationshipList/:friend_id/basicInfo">
+            <Taste_basicinfo_screen></Taste_basicinfo_screen>
+          </Route>
+          <Route path="/RelationshipList/:friend_id/taste">
+            <Taste_taste_screen
+              tastes={props.tastes}
+              setTastes={props.setTastes}
+            ></Taste_taste_screen>
+          </Route>
+          <Route path="/RelationshipList/:friend_id/history">
+            <Taste_history_screen />
+          </Route>
+        </Switch>
       </InformationContainer>
 
     </ScreenContainer>

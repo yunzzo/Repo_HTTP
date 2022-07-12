@@ -12,7 +12,7 @@ function RelationshipList() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getInfos = async () => {
-    const apiUrl = `http://localhost:8000/api/`;
+    const apiUrl = `http://localhost:8000/api/friends`;
     await axios
       .get(apiUrl)
       .then((res) => {
