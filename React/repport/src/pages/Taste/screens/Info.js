@@ -54,7 +54,7 @@ const Info = (props) => {
 
   //삭제 버튼 
   const [deleteModal, setDeleteModal] = useState(false);
-  console.log(props);
+  console.log(info);
   // if (!info || info.length === 0) return <p>no info</p>
   return (
 
