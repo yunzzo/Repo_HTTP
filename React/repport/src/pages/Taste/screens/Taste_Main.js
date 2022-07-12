@@ -24,11 +24,6 @@ import { HiDotsHorizontal } from "react-icons/hi";
 
 //todo (MVP에서는X) 이 화면에서 취향 클릭했을 때 구체적 내용 입력 페이지로 들어가도록 라우팅하기.
 
-import InfoLoading from "../../../InfoLoading";
-import InfoLoadingComponent from "../../../InfoLoading";
-import Info from "./Info";
-
-
 
 const Taste_Main = (props) => {
   const [info, setInfo] = useState();
