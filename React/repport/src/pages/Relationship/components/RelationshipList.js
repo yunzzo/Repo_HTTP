@@ -53,13 +53,15 @@ function RelationshipList() {
                 <S.GroupButton>친구</S.GroupButton>
               </S.ScrollBar>
             </S.BarContainer>
+
+          </S.RightSidedContainer>
+          <S.RightSidedContainer>
             <div>
 
               {infos.map((info) => {
                 return (
                   <div key={info.id}>
                     <Link to={`/RelationshipList/${info.id}/taste`}> <h5>{info.fname}</h5></Link>
-
                     <p>{info.cellNum}</p>
                   </div>
                 )
