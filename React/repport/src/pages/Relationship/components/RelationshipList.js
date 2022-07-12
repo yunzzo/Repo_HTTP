@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import * as S from '../style'
 import GlobalStyle from '../../../GlobalStyle';
-
-
-import InfoLoadingComponent from '../../../InfoLoading';
-import Infos from '../../../Infos';
-import InfoLoading from '../../../InfoLoading';
+import axios from "axios";
+import { Route, Link, useRouteMatch } from "react-router-dom";
 
 function RelationshipList() {
-  // const RelationshipList = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isClickedInput, setIsClickedInput] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [infos, setInfos] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const InfoLoading = InfoLoadingComponent(Infos);
-  const [appState, setAppState] = useState({
-    loading: false,
-    infos: null,
-  });
-
-  useEffect(() => {
-    setAppState({ loading: true });
+  const getInfos = async () => {
     const apiUrl = `http://localhost:8000/api/`;
-    fetch(apiUrl)
-      .then((data) => data.json())
-      .then((infos) => {
-        setAppState({ loading: false, infos: infos });
-      });
-  }, [setAppState]);
+    await axios
+      .get(apiUrl)
+      .then((res) => {
+        console.log(res);
+        setInfos(res.data);
+      })
+  }
+  useEffect(async () => {
+    await getInfos();
+    setIsLoading(false);
+  }, []);
+
 
   const go2BringContacts = () => {
     setIsClicked(true);
@@ -37,7 +34,9 @@ function RelationshipList() {
     // props.isCheckedFriends(true);
     setIsSubmitted(true);
   }
-
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
   return (
     <GlobalStyle>
       <S.Body >
@@ -55,7 +54,19 @@ function RelationshipList() {
               </S.ScrollBar>
             </S.BarContainer>
             <div>
-              <InfoLoading isLoading={appState.loading} infos={appState.infos} />
+
+              {infos.map((info) => {
+                return (
+                  <div key={info.id}>
+                    <Link to={`/RelationshipList/${info.id}/taste`}> <h5>{info.fname}</h5></Link>
+
+                    <p>{info.cellNum}</p>
+                  </div>
+                )
+
+              })}
+
+
             </div>
           </S.RightSidedContainer>
         </S.RelationshipListContainer>
