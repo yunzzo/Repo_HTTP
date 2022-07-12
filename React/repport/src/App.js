@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Switch } from 'react-router-dom';
 import Auth from './pages/Login/components/Auth';
 import InfoCollect from './pages/Login/components/InfoCollect';
 import Name from './pages/Login/components/Name';
@@ -8,6 +8,8 @@ import RelationshipList from './pages/Relationship/components/RelationshipList';
 import InfoLoading from './InfoLoading';
 import InfoLoadingComponent from './InfoLoading';
 import Infos from './Infos';
+import Taste_Main from './pages/Taste/screens/Taste_Main';
+import TasteApp from './pages/Taste/TasteApp';
 
 const App = () => {
   // const InfoLoading = InfoLoadingComponent(Infos);
@@ -34,12 +36,14 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Splash />}></Route>
-          <Route path="/Auth" element={<Auth />}></Route>
-          <Route path="/InfoCollect" element={<InfoCollect />}></Route>
-          <Route path="/RelationshipList" element={<RelationshipList />}></Route>
-        </Routes>
+        <Switch>
+
+          <Route path="/Auth"><Auth /></Route>
+          <Route path="/InfoCollect"><InfoCollect /></Route>
+          <Route exact path="/RelationshipList"><RelationshipList /></Route>
+          <Route exact path="/RelationshipList/:friend_id/taste"><TasteApp /></Route>
+          <Route path="/"><Splash /></Route>
+        </Switch>
       </BrowserRouter>
     </div>
   );

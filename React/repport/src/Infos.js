@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Link } from "react-router-dom"
 
 // function Infos() {
 const Infos = (props) => {
@@ -10,7 +11,8 @@ const Infos = (props) => {
             {infos.map((info) => {
                 return (
                     <div key={info.id}>
-                        <h5>{info.fname}</h5>
+                        <Link to={`/RelationshipList/${info.id}/taste`}> <h5>{info.fname}</h5></Link>
+
                         <p>{info.cellNum}</p>
                     </div>
                 )
