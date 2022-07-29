@@ -4,10 +4,18 @@ import * as S from '../style'
 import Name from './Name';
 import GlobalStyle from '../../../GlobalStyle';
 
+
 const InfoCollect = () => {
     const [isClicked, setIsClicked] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+
+    // 인가코드
+    let code = new URL(window.location.href).searchParams.get("code");
+
+    console.log(code)
+
 
     const go2Auth = () => {
         setIsClicked(true);

@@ -4,6 +4,7 @@ import InfoCollect from './InfoCollect'
 import GlobalStyle from '../../../GlobalStyle'
 import * as S from '../style'
 import Name from './Name'
+import { KAKAO_AUTH_URL } from './oAuth';
 
 const Auth = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -15,6 +16,7 @@ const Auth = () => {
       <InfoCollect />
     )
   }
+
   return (
     <GlobalStyle>
       <S.Body >
@@ -24,16 +26,10 @@ const Auth = () => {
           </S.CenteredContainer>
 
           <S.ButtonContainer>
-
             <S.AuthButton>
-              <ul>
-                <Link to="/InfoCollect"><li>카카오톡으로 계속하기</li></Link>
-              </ul>
-            </S.AuthButton>
-            <S.AuthButton onClick={go2InfoColect}>
-              <ul>
-                <Link to="/InfoCollect"><li> Gmail로 계속하기</li></Link>
-              </ul>
+              <a href={KAKAO_AUTH_URL}>
+                <span>카카오톡으로 계속하기</span>
+              </a>
             </S.AuthButton>
           </S.ButtonContainer>
         </S.AuthContainer>
