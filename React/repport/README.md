@@ -10,3 +10,4 @@ npm install react-icons --save
  pip install django
  pip install djangorestframework
  pip install django-cors-headers
+ import requests

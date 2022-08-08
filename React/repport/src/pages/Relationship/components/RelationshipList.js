@@ -20,10 +20,10 @@ function RelationshipList() {
         setInfos(res.data);
       })
   }
-  useEffect(async () => {
-    await getInfos();
-    setIsLoading(false);
-  }, []);
+  // useEffect(async () => {
+  //   await getInfos();
+  //   setIsLoading(false);
+  // }, []);
 
 
   const go2BringContacts = () => {

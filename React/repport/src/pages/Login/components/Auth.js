@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import InfoCollect from './InfoCollect'
+// import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+// import InfoCollect from './InfoCollect'
 import GlobalStyle from '../../../GlobalStyle'
 import * as S from '../style'
-import Name from './Name'
+// import Name from './Name'
 import { KAKAO_AUTH_URL } from './oAuth';
 
+
 const Auth = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const go2InfoColect = () => {
-    setIsClicked(true);
-  }
-  if (isClicked) {
-    return (
-      <InfoCollect />
-    )
-  }
+  // const [isClicked, setIsClicked] = useState(false);
+  // const go2InfoColect = () => {
+  //   setIsClicked(true);
+  // }
+  // if (isClicked) {
+  //   return (
+  //     <InfoCollect />
+  //   )
+  // }
 
   return (
     <GlobalStyle>

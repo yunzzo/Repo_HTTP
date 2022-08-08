@@ -3,18 +3,23 @@ import Auth from './Auth';
 import * as S from '../style'
 import Name from './Name';
 import GlobalStyle from '../../../GlobalStyle';
+import { REST_API_KEY } from './oAuth';
 
 
 const InfoCollect = () => {
     const [isClicked, setIsClicked] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    // const NEXT_URL="http://localhost:3000/Name";
 
-
-    // 인가코드
-    let code = new URL(window.location.href).searchParams.get("code");
-
-    console.log(code)
+   
+    // fetch(`https://kauth.kakao.com/oauth/token`, {
+    //     body: `grant_type=authorization_code&client_id=${REST_API_KEY}&code=${AUTHORIZE_CODE}&redirect_uri=${NEXT_URL}`,
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded"
+    //     },
+    //     method: "POST"
+    //   })
 
 
     const go2Auth = () => {

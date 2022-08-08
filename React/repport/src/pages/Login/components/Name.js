@@ -3,6 +3,7 @@ import * as S from '../style'
 import BringContacts from './BringContacts';
 import InfoCollect from './InfoCollect';
 import GlobalStyle from '../../../GlobalStyle';
+import { Link } from "react-router-dom";
 
 const Name = () => {
     const [isClicked, setIsClicked] = useState(false);
@@ -55,7 +56,7 @@ const Name = () => {
                         </S.InfoCollectBox>
                     </S.LeftSidedContainer>
                     <S.CenteredContainer onClick={turnBlue}>
-                        <div onClick={go2BringContacts}>button</div>
+                       <Link to={`/BringContacts`}><div>button</div></Link>
                     </S.CenteredContainer>
 
                 </S.InfoCollectContainer>
