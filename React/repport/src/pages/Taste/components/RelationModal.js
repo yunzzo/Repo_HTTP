@@ -1,6 +1,7 @@
 //* 관계 선택 버튼 누르면 열리는 모달
 //! 반응형 완료
 
+//NicknameModal이랑 해야할 것 똑같음, + 변수 함수 이름들 바꾸기
 
 import React, { useState } from "react";
 
@@ -9,14 +10,24 @@ import MainButton from "./MainButton";
 import styled from "styled-components";
 
 
-const NicknameModal = (props) => {
+const RelationModal = (props) => {
   //사용자로부터 전달받은 호칭을 저장하는 state
-  const [selectedNickname, setSelectedNickname] = useState("");
+  const [selectedRelation, setSelectedRelation] = useState("");
 
   //완료 버튼
   const completeHandler = () => {
     //todo 만약에 완료 버튼 눌렀을 시 조건문으로 검사해 아무 것도 선택되지 않았다면, 기본값(호칭)으로 설정하거나 필수적으로 선택해야한다는 문구 띄우는 로직 작성하기
-    props.onChange(selectedNickname);
+    props.onChange(selectedRelation);
+
+    //완료 시 선택한 호칭을 백엔드로 저장
+    // axios({
+    //   url:`http://localhost:8000/api/friends/${friend_id}`,
+    //   method:'patch',
+    //   data:{
+    //     how2call:selectedRelation
+    //   },
+    // })
+
     //닉네임을 바꾸었으면 모달을 끈다.
     props.onCancel();
   };
@@ -25,12 +36,12 @@ const NicknameModal = (props) => {
   const delHandler = () => {
     props.onCancel();
     //그리고 논리적으로 호칭을 임시 저장하는 state도 초기화 해주어야함
-    setSelectedNickname("");
+    setSelectedRelation("");
   };
 
   //특정 호칭 클릭했을 때
-  const nicknameHandler = (e) => {
-    setSelectedNickname(e.target.innerText);
+  const relationHandler = (e) => {
+    setSelectedRelation(e.target.innerText);
     
   }
 
@@ -39,7 +50,7 @@ const NicknameModal = (props) => {
   const [isBtnSelected, setIsBtnSelected]=useState(false);
 
   
-  const nameInputHandler = (e)=> {
+  const relationInputHandler = (e)=> {
     if (e.key ==='Enter'){
       setNicknames(n=>[...n,e.target.value]);
     }
@@ -57,14 +68,14 @@ const NicknameModal = (props) => {
    {
     return (
         <li class={isBtnSelected[index] ? "clickedStyle" : "basicStyle" } key={index} onClick={()=>(styleChangeHandler(index))}>
-        <button onClick={nicknameHandler}>{nickname}</button>
+        <button onClick={relationHandler}>{nickname}</button>
       </li>
       
     )
     }
     )
 
-    const InputElement = <input type="text" onKeyPress={nameInputHandler}  placeholder="직접 입력"/>
+    const InputElement = <input type="text" onKeyPress={relationInputHandler}  placeholder="직접 입력"/>
     nicknamesList.push(InputElement);
 
   return (
@@ -347,4 +358,4 @@ nth child ㄱㄱ??
 //     }
 // `
 
-export default NicknameModal;
+export default RelationModal;

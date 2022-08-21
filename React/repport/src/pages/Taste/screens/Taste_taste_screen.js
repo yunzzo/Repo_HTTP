@@ -1,18 +1,73 @@
 //*기본화면에서 취향 클릭 시 나타나는 화면
-//! 반응형 완료
+
+/*
+백엔드 서버에서 GET요청
+특정 취향과 그 취향에 대한 내용 GET요청으로 성공적으로 가져옴
+1)원래 기본 취향들이 있어서, 데이터베이스에 이것 반영해야함
+2)기본취향들과, 추가된 취향들에 대한 각각의 이미지가 있어서, 데이터베이스 수정하고 useEffect상에서 이미지 넣는 코드 짜야함 
+*/
 
 import React, { useState, useEffect } from 'react'
 import { Link, useRouteMatch } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-
+/*
+특정 사람에에 대한 취향들(기본 취향들 + 사용자가 추가적으로 입력한 취향들)
+그 취향들에 대해서 사용자가 입력한 구체적 내용들
+*/
 
 
 
 const Taste_taste_screen = (props) => {
+  console.log("mount")
   let match = useRouteMatch();
   let friend_id = match.params.friend_id;
+
+  //데이터통신
+  const [infos, setInfos] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  //error을 컨트롤하기 위한 state
+  const [error, setError] = useState(null);
+  const [listElements,setListElements]=useState([]);
+  
+  //데이터 통신 함수
+  async function fetchTasteHandler() {
+    console.log("fetch start");
+    //로딩시작
+    setIsLoading(true);
+    setError(null)
+    try {
+      const response = await fetch('http://localhost:8000/api/tastes');
+      
+      //에러가 있다면
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const data = await response.json();
+      
+      //리스트 엘리먼트 생성
+      const list_of_elements=data.map((taste) => (
+        <ListItemsContainer><li key={taste.id}><ListImageContainer><img src={require("../images/custom.png")}/></ListImageContainer><ListTextsContainer><span>{taste.category}</span><span>{taste.contents}</span></ListTextsContainer></li></ListItemsContainer> 
+    ));
+      setListElements(list_of_elements);
+    }
+
+    catch (error){
+      setError(error.message);
+    }
+    //로딩 종료 
+    setIsLoading(false);
+  };
+
+
+  useEffect(() => {
+    console.log("useEffect");
+    fetchTasteHandler();
+   },[]);
+
+  
   //image를 렌더링하기 위한 로직
   /*
   매번 이렇게 반복문과 검사를 해주어야 하므로 비효율적이지만,
@@ -29,10 +84,7 @@ const Taste_taste_screen = (props) => {
   //   require("../images/custom.png"),
   // ];
   // //받아온 호칭 배열에 이미지 주소 넣기
-
-  // //! 이거 밖에 i 선언안해주면 i찾을 수 없다고 에러남, 왜지??
-  // let i=0;
-  // for(i=0;i<props.tastes.length;i++){
+  // for(let i=0;i<props.tastes.length;i++){
   //   if (i<6){
   //     props.tastes[i].image=imageSources[i];
   //   }
@@ -44,52 +96,16 @@ const Taste_taste_screen = (props) => {
   // //props로 받아온 딕셔너리 배열로 리스트 엘리먼트 생성.
   // const list_of_tastes = props.tastes.map((taste) => (
   //       <ListItemsContainer><li key={taste.key}><ListImageContainer><img src={taste.image}/></ListImageContainer><ListTextsContainer><span>{taste.name}</span><span>{taste.content}</span></ListTextsContainer></li></ListItemsContainer>
-
   // ));
-  const [infos, setInfos] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
-  const getInfos = async () => {
-    const apiUrl = `http://localhost:8000/api/tastes`;
-    await axios
-      .get(apiUrl)
-      .then((res) => {
-        // console.log(res);
-        setInfos(res.data);
-      })
-  }
-  useEffect(async () => {
-    await getInfos();
-    setIsLoading(false);
-  }, []);
-  if (isLoading) {
-    return <div>로딩중..</div>;
-  }
-  console.log(infos);
-  console.log(friend_id);
   return (
-    // <ScreenContainer>
-    // <ul>{list_of_tastes}</ul>
+  <>
+  {isLoading ? (<div>Loading...</div>):(<ScreenContainer>
+    <ul>{listElements}</ul>
+  <Link to="/taste/choose_taste_to_edit"><img src={require("../images/edit.png")}/></Link>
+  </ScreenContainer>)}
+  </>
 
-    // <Link to="/taste/choose_taste_to_edit"><img src={require("../images/edit.png")}/></Link>
-    // </ScreenContainer>
-
-    <div>
-
-      {infos.map((info) => {
-        if (info.TasteOf == friend_id) {
-          return (
-            <div key={info.id}>
-              {/* <Link to={`/RelationshipList/${info.id}/taste`}> <h5>{info.id}</h5></Link> */}
-              <h2>{info.category}</h2>
-            </div>
-          )
-        }
-
-      })}
-
-
-    </div>
   );
 };
 
@@ -97,9 +113,6 @@ export default Taste_taste_screen;
 
 
 const ScreenContainer = styled.div`
-
-
-
 width:100%;
 height:100%;
 //ul list에서 점 없애줌.
@@ -173,7 +186,6 @@ span:nth-child(2) {
   font-weight: normal;
   color: #939393;
   font-family: Roboto;
-
 }
 `
 

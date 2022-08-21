@@ -13,9 +13,11 @@ import Taste_Main from './pages/Taste/screens/Taste_Main';
 import TasteApp from './pages/Taste/TasteApp';
 import Callback from './pages/Login/components/Callback';
 
+import styled from 'styled-components';
+
 const App = () => {
   return (
-    <div>
+    <>
       <BrowserRouter>
         <Switch>
           <Route path="/Auth"><Auth /></Route>
@@ -27,11 +29,12 @@ const App = () => {
           <Route exact path="/RelationshipList/:friend_id/history"><TasteApp /></Route>
           <Route exact path="/RelationshipList/:friend_id/taste"><TasteApp /></Route>
           <Route exact path="/RelationshipList"><RelationshipList /></Route>
+          
 
           <Route exact path="/"><Splash /></Route>
         </Switch>
       </BrowserRouter>
-    </div>
+      </>
   );
 }
 export default App;

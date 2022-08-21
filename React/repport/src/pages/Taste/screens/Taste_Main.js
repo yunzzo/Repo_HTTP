@@ -25,6 +25,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 //todo (MVP에서는X) 이 화면에서 취향 클릭했을 때 구체적 내용 입력 페이지로 들어가도록 라우팅하기.
 
 const Taste_Main = (props) => {
+
   const [info, setInfo] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,10 +38,10 @@ const Taste_Main = (props) => {
     await axios
       .get(apiUrl)
       .then((res) => {
-        // console.log(res);
         setInfo(res.data);
-      })
+      }).catch(error=>console.log("error",error))
   }
+  
   useEffect(async () => {
     await getInfo();
     setIsLoading(false);
@@ -73,6 +74,8 @@ const Taste_Main = (props) => {
   const urlBasic = `/RelationshipList/${friend_id}/basicInfo`;
   const urlTaste = `/RelationshipList/${friend_id}/taste`;
   const urlHistory = `/RelationshipList/${friend_id}/history`;
+
+
 
   if (isLoading) {
     return <div>로딩중..</div>;

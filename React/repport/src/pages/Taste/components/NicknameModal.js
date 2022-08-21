@@ -1,18 +1,26 @@
 //*호칭 버튼을 클릭하면 뜨는 모달
 //! 반응형 완료
+
 //todo 글자 크기 늘어나면 그에따라 콘텐츠 크기도 커지게..
+//todo PATCH요청 보내는 것 코드 일단 주석처리 해놓음.
+//todo 직접입력시 POST 요청도 해야함.
 
 import React, { useState } from "react";
-
+import { useRouteMatch } from "react-router-dom";
 import MainButton from "./MainButton";
 
 import styled from "styled-components";
-
+import axios from "axios";
 
 const NicknameModal = (props) => {
+
+  let match = useRouteMatch();
+  let friend_id = match.params.friend_id;
+
   //사용자로부터 전달받은 호칭을 저장하는 state
   const [selectedNickname, setSelectedNickname] = useState("");
 
+  //이것 결국 백엔드로부터 GET요청으로 받아와야하는 것
   const [nicknames, setNicknames]=useState(['호칭없음','님','씨','쓰','언니','오빠','형','누나','선배','후배','선생님','교수님'])
   
   const [isBtnSelected, setIsBtnSelected]=useState(false);
@@ -21,6 +29,18 @@ const NicknameModal = (props) => {
   const completeHandler = () => {
     //todo 만약에 완료 버튼 눌렀을 시 조건문으로 검사해 아무 것도 선택되지 않았다면, 기본값(호칭)으로 설정하거나 필수적으로 선택해야한다는 문구 띄우는 로직 작성하기
     props.onChange(selectedNickname);
+    
+    //완료 시 선택한 호칭을 백엔드로 저장
+    // axios({
+    //   url:`http://localhost:8000/api/friends/${friend_id}`,
+    //   method:'patch',
+    //   data:{
+    //     how2call:selectedNickname
+    //   },
+    // })
+    
+    //백엔드로 요청을 보낸후 중간 변수 초기화
+    setSelectedNickname("")
     //닉네임을 바꾸었으면 모달을 끈다.
     props.onCancel();
   };

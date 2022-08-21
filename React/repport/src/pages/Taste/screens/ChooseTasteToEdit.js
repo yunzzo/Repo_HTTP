@@ -1,6 +1,8 @@
 //*취향화면에서 편집(연필버튼) 클릭 시 렌더링되는 페이지
 //! 반응형 완료
 
+//! 백엔드 서버로 GET요청 필요
+
 import React from "react";
 import { useHistory, Link } from "react-router-dom";
 

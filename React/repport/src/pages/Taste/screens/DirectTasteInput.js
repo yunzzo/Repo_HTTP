@@ -1,6 +1,8 @@
 //*취향종류선택페이지에서 직접 입력 누를 시 렌더링되는 페이지
 //! 반응형 완료
 
+//! 백엔드 서버로 POST 요청 필요
+
 import React, { useState } from "react";
 
 import { useHistory, Link } from "react-router-dom";

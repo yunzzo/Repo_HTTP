@@ -1,6 +1,8 @@
 //*특정 취향에 대한 구체적인 내용을 입력하는 페이지(컨테이너)
 //! 반응형 완료
 
+//! 백엔드 서버로 POST요청 보내기, 수정도 가능해서 PUT 요청도 필요할 듯
+
 import React, { useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 
