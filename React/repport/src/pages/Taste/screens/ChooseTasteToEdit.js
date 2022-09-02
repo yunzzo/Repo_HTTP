@@ -26,9 +26,8 @@ const ChooseTasteToEdit = (props) => {
   ];
   //받아온 호칭 배열에 이미지 주소 넣기
 
-  //! 이거 밖에 i 선언안해주면 i찾을 수 없다고 에러남, 왜지??
-  let i=0;
-  for(i=0;i<props.tastes.length;i++){
+
+  for(let i=0;i<props.tastes.length;i++){
     if (i<6){
       props.tastes[i].image=imageSources[i];
     }

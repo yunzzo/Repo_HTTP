@@ -12,6 +12,7 @@ import Taste_history_screen from './pages/Taste/screens/Taste_history_screen';
 import Taste_Main from './pages/Taste/screens/Taste_Main';
 import TasteApp from './pages/Taste/TasteApp';
 import Callback from './pages/Login/components/Callback';
+import ChooseTasteToEdit from './pages/Taste/screens/ChooseTasteToEdit';
 
 import styled from 'styled-components';
 
@@ -26,8 +27,10 @@ const App = () => {
           <Route path="/BringContacts"><BringContacts /></Route>
           
           <Route exact path="/RelationshipList/:friend_id/basicInfo"><TasteApp /></Route>
+          <Route exact path="/RelationshipList/:friend_id/basicInfo/eidt"><TasteApp /></Route>
           <Route exact path="/RelationshipList/:friend_id/history"><TasteApp /></Route>
           <Route exact path="/RelationshipList/:friend_id/taste"><TasteApp /></Route>
+          <Route exact path="/RelationshipList/:frien d_id/taste/choose_taste_to_edit"><TasteApp /></Route>
           <Route exact path="/RelationshipList"><RelationshipList /></Route>
           
 

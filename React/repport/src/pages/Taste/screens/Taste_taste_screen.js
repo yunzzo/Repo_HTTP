@@ -23,6 +23,7 @@ const Taste_taste_screen = (props) => {
   console.log("mount")
   let match = useRouteMatch();
   let friend_id = match.params.friend_id;
+  let UrlToChooseTasteToEdit=`/RelationshipList/${friend_id}/taste/choose_taste_to_edit`
 
   //데이터통신
   const [infos, setInfos] = useState();
@@ -102,7 +103,7 @@ const Taste_taste_screen = (props) => {
   <>
   {isLoading ? (<div>Loading...</div>):(<ScreenContainer>
     <ul>{listElements}</ul>
-  <Link to="/taste/choose_taste_to_edit"><img src={require("../images/edit.png")}/></Link>
+  <Link to={`/RelationshipList/${friend_id}/taste/choose_taste_to_edit`}><img src={require("../images/edit.png")}/></Link>
   </ScreenContainer>)}
   </>
 
